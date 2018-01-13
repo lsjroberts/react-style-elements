@@ -8,9 +8,7 @@ It aims to provide a separation between layout and style, with a bonus of type s
 
 ## Examples
 
-_Note: all examples are in typescript, see [without typescript][2]._
-
-```ts
+```js
 import ReactDOM from "react-dom";
 import Style from "react-style-elements/style";
 import Color from "react-style-elements/style/color";
@@ -18,9 +16,9 @@ import Font from "react-style-elements/style/font";
 import Element, { el } from "react-style-elements/elements";
 import Attributes from "react-style-elements/elements/attributes";
 
-enum MyStyles {
-  Title
-}
+const MyStyles = Style.classes([
+  "Title",
+]);
 
 const styleSheet = Style.styleSheet(MyStyles, [
   Style.style(MyStyles.Title, [
@@ -40,7 +38,7 @@ ReactDOM.render(document.getElementById("main"), view);
 
 ### Layouts
 
-```ts
+```js
 import { row, column } from "react-style-elements/elements";
 
 const view = Element.layout(
@@ -65,8 +63,8 @@ const view = Element.layout(
 
 ### App structure
 
-```ts
-// app.ts
+```js
+// app.js
 import { layout, column, h1 } from "react-style-elements/elements";
 import styleSheet from "./styles";
 import example from "./views/example";
@@ -80,8 +78,8 @@ export default layout(
 );
 ```
 
-```ts
-// views/example.ts
+```js
+// views/example.js
 import { el, padding } from "react-style-elements/elements";
 import { Styles } from "../styles";
 
@@ -91,16 +89,16 @@ export default (label) => (
 ```
 
 ```ts
-// styles.ts
+// styles.js
 import { styleSheet, style } from "react-style-elements/style";
 import { text, rgb } from "react-style-elements/style/color";
 import { size, typeface, font } from "react-style-elements/style/font";
 
-export enum Styles {
-  App,
-  Title,
-  Example
-};
+export const Styles = classes([
+  "App",
+  "Title",
+  "Example"
+]);
 
 export default styleSheet(Styles, [
   style(Styles.App, [
@@ -117,19 +115,5 @@ export default styleSheet(Styles, [
 ]);
 ```
 
-### Without typescript
-
-The only difference required is to use the `classes()` function to create the styles enum.
-
-```js
-import { classes } from "react-style-elements/style";
-
-const Styles = classes([
-  "App",
-  "Title",
-  "Example"
-]);
-```
 
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
-[2]: #without-typescript
