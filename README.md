@@ -83,7 +83,7 @@ export default layout(
 ```ts
 // views/example.ts
 import { el, padding } from "react-style-elements/elements";
-import { Styles } from "./styles";
+import { Styles } from "../styles";
 
 export default (label) => (
   el(Styles.Example, [padding(10)], `Hello, ${label}!`)
