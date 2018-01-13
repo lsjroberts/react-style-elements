@@ -66,7 +66,7 @@ const view = Element.layout(
 ```js
 // app.js
 import { layout, column, h1 } from "react-style-elements/elements";
-import styleSheet from "./styles";
+import styleSheet, { Styles } from "./styles";
 import example from "./views/example";
 
 export default layout(
