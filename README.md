@@ -67,7 +67,7 @@ const view = Element.layout(
 
 ```ts
 // app.ts
-import { layout } from "react-style-elements/elements";
+import { layout, column, h1 } from "react-style-elements/elements";
 import styleSheet from "./styles";
 import example from "./views/example";
 
