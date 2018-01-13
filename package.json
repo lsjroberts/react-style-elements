@@ -1,0 +1,29 @@
+{
+  "name": "react-style-elements",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^1.10.2",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.92",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "lodash": "^4.17.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
