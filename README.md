@@ -8,7 +8,7 @@ It aims to provide a separation between layout and style, with a bonus of type s
 
 ## Examples
 
-_Note: all examples are in typescript._
+_Note: all examples are in typescript, see [without typescript][2]._
 
 ```ts
 import ReactDOM from "react-dom";
@@ -100,7 +100,7 @@ export enum Styles {
   App,
   Title,
   Example
-}
+};
 
 export default styleSheet(Styles, [
   style(Styles.App, [
@@ -117,4 +117,19 @@ export default styleSheet(Styles, [
 ]);
 ```
 
+### Without typescript
+
+The only difference required is to use the `classes()` function to create the styles enum.
+
+```js
+import { classes } from "react-style-elements/style";
+
+const Styles = classes([
+  'App',
+  'Title',
+  'Example'
+]);
+```
+
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
+[2]: #without-typescript
