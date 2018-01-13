@@ -145,13 +145,16 @@ export function padding(p: number): Attribute {
 // -- Style
 
 interface StyleSheet {
-  classes: any;
+  classes: Classes;
   styles: Array<Style>;
+}
+interface Classes {
+  [name: string]: string;
 }
 type Style = [string, Array<StyleProp>];
 type StyleProp = [string, string];
 
-export function styleSheet(classes, styles): StyleSheet {
+export function styleSheet(classes: Classes, styles: Array<Style>): StyleSheet {
   return { classes, styles };
 }
 
@@ -159,7 +162,7 @@ export function style(name, props: Array<StyleProp>): Style {
   return [name, props];
 }
 
-export function classes(names: Array<string>): object {
+export function classes(names: Array<string>): Classes {
   return fromPairs(names.map(name => [name, name]));
 }
 
