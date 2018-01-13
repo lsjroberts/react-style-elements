@@ -41,7 +41,7 @@ ReactDOM.render(document.getElementById("main"), view);
 ### Layouts
 
 ```ts
-import Element, { el, row, column } from "react-style-elements/elements";
+import { row, column } from "react-style-elements/elements";
 
 const view = Element.layout(
   styleSheet,
@@ -61,6 +61,60 @@ const view = Element.layout(
     ]
   )
 );
+```
+
+### App structure
+
+```ts
+// app.ts
+import { layout } from "react-style-elements/elements";
+import styleSheet from "./styles";
+import example from "./views/example";
+
+export default layout(
+  styleSheet,
+  column(Styles.App, [], [
+    h1(Styles.Title, [], "Welcome"),
+    example("World")
+  ])
+);
+```
+
+```ts
+// views/example.ts
+import { el, padding } from "react-style-elements/elements";
+import { Styles } from "./styles";
+
+export default (label) => (
+  el(Styles.Example, [padding(10)], `Hello, ${label}!`)
+);
+```
+
+```ts
+// styles.ts
+import { styleSheet, style } from "react-style-elements/style";
+import { text, rgb } from "react-style-elements/style/color";
+import { size, typeface, font } from "react-style-elements/style/font";
+
+export enum Styles {
+  App,
+  Title,
+  Example
+}
+
+export default styleSheet(Styles, [
+  style(Styles.App, [
+    text(rgb(30, 30, 30)),
+    size(16),
+    typeface(font("Helvetica"), font("sans-serif"))
+  ]),
+  style(Styles.Title, [
+    size(28)
+  ]),
+  style(Styles.Example, [
+    text(rgb(30, 120, 30))
+  ])
+]);
 ```
 
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
