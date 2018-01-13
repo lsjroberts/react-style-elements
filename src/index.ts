@@ -94,7 +94,7 @@ export function layout(
   const styles = styleSheet.styles
     .map(
       ([index, props]) =>
-        `.${styleSheet.stylesType[index]} { ${props
+        `.${styleSheet.classes[index]} { ${props
           .map(([key, value]) => `${key}: ${value};`)
           .join(" ")} }`
     )
@@ -145,18 +145,22 @@ export function padding(p: number): Attribute {
 // -- Style
 
 interface StyleSheet {
-  stylesType: any;
+  classes: any;
   styles: Array<Style>;
 }
 type Style = [string, Array<StyleProp>];
 type StyleProp = [string, string];
 
-export function styleSheet(stylesType, styles): StyleSheet {
-  return { stylesType, styles };
+export function styleSheet(classes, styles): StyleSheet {
+  return { classes, styles };
 }
 
 export function style(name, props: Array<StyleProp>): Style {
   return [name, props];
+}
+
+export function classes(names: Array<string>): object {
+  return fromPairs(names.map(name => [name, name]));
 }
 
 interface ColorProp {
