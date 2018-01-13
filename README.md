@@ -41,7 +41,7 @@ ReactDOM.render(document.getElementById("main"), view);
 ### Layouts
 
 ```ts
-import Element, { el, row, column, image } from "react-style-elements/elements";
+import Element, { el, row, column } from "react-style-elements/elements";
 
 const view = Element.layout(
   styleSheet,
