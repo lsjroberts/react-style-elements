@@ -35,7 +35,7 @@ const view = Element.layout(
   el(MyStyles.Title, [Attributes.padding(10)], "Hello!")
 );
 
-ReactDOM.render(document.getElementById("main"), view);
+ReactDOM.render(view, document.getElementById("main"));
 ```
 
 ### Layouts
@@ -115,6 +115,35 @@ export default styleSheet(Styles, [
     text(rgb(30, 120, 30))
   ])
 ]);
+```
+
+### Redux
+
+Use `react-redux` and a standard provider setup.
+
+```js
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("main")
+)
+```
+
+Then use `connectedLayout()`:
+
+```js
+import { connectedLayout } from "react-style-elements/redux";
+
+export default connectedLayout(styleSheet, ({ state, dispatch }) =>
+  Input.text(
+    null,
+    {
+      value: state,
+      onChange: (newValue) => dispatch({ type: 'SET_VALUE', value: newValue })
+    }
+  )
+);
 ```
 
 
