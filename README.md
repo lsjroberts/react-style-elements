@@ -2,6 +2,8 @@
 
 A partial port of the Elm library [style-elements][1] built upon React.
 
+- [Todo App][2]
+
 ## Why?
 
 It aims to provide a separation between layout and style, with a bonus of type safe styling and css classes.
@@ -117,3 +119,4 @@ export default styleSheet(Styles, [
 
 
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
+[2]: https://github.com/lsjroberts/react-style-elements-todo
