@@ -125,9 +125,9 @@ The only difference required is to use the `classes()` function to create the st
 import { classes } from "react-style-elements/style";
 
 const Styles = classes([
-  'App',
-  'Title',
-  'Example'
+  "App",
+  "Title",
+  "Example"
 ]);
 ```
 
