@@ -3,6 +3,7 @@ import {
   row,
   styleSheet,
   style,
+  classes,
   Color,
   Font,
   el,
@@ -10,18 +11,15 @@ import {
   padding
 } from "./index";
 
-enum Styles {
-  heading,
-  content
-}
+const Styles = classes(["Heading", "Content"]);
 
 const myStyleSheet = styleSheet(Styles, [
-  style(Styles.heading, [
+  style(Styles.Heading, [
     Color.text(Color.rgb(0, 0, 255)),
     Font.size(28),
     Font.typeface([Font.font("Times"), Font.font("serif")])
   ]),
-  style(Styles.content, [
+  style(Styles.Content, [
     Color.text(Color.rgb(30, 30, 30)),
     Font.size(16),
     Font.typeface([Font.font("Helvetica"), Font.font("sans-serif")])
@@ -34,9 +32,9 @@ const view = layout(
     null,
     [],
     [
-      el(Styles.heading, [padding(10)], "Hello, World!"),
+      el(Styles.Heading, [padding(10)], "Hello, World!"),
       el(
-        Styles.content,
+        Styles.Content,
         [],
         "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, " +
           "eget lacinia odio sem nec elit. Nulla vitae elit libero, a " +
