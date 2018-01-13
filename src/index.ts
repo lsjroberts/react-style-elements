@@ -9,8 +9,12 @@ type Layout = Row | Column;
 class Element extends Component {
   type: string;
 
-  constructor(type, attrs, child) {
-    const props = { ...attrsToReactProps(attrs), children: [child] };
+  constructor(type, style, attrs, child) {
+    const props = {
+      ...attrsToReactProps(attrs),
+      children: [child],
+      className: style
+    };
     super(props);
     this.type = type;
   }
@@ -60,11 +64,11 @@ export function el(
   attrs: Array<Attribute>,
   child: Layout | Element | string
 ): Element {
-  return new Element("div", attrs, child);
+  return new Element("div", style, attrs, child);
 }
 
 export function empty() {
-  return new Element("span", null, null);
+  return new Element("span", null, null, null);
 }
 
 // -- Text
@@ -78,7 +82,7 @@ export function h1(
   attrs: Array<Attribute>,
   child: Element | string
 ): Element {
-  return new Element("h1", attrs, child);
+  return new Element("h1", style, attrs, child);
 }
 
 // -- Layout
