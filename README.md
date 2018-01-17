@@ -19,12 +19,8 @@ import Font from "react-style-elements/style/font";
 import Element, { el } from "react-style-elements/elements";
 import Attributes from "react-style-elements/elements/attributes";
 
-const MyStyles = Style.classes([
-  "Title",
-]);
-
-const styleSheet = Style.styleSheet(MyStyles, [
-  Style.style(MyStyles.Title, [
+const styles = Style.styleSheet([
+  Style.style('title', [
     Color.text(Color.rgb(30, 30, 30)),
     Color.background(Color.white),
     Font.size(28)
@@ -32,8 +28,8 @@ const styleSheet = Style.styleSheet(MyStyles, [
 ]);
 
 const view = Element.layout(
-  styleSheet,
-  el(MyStyles.Title, [Attributes.padding(10)], "Hello!")
+  styles(),
+  el(styles.title, [Attributes.padding(10)], "Hello!")
 );
 
 ReactDOM.render(view, document.getElementById("main"));
@@ -45,19 +41,19 @@ ReactDOM.render(view, document.getElementById("main"));
 import { row, column } from "react-style-elements/elements";
 
 const view = Element.layout(
-  styleSheet,
+  styles(),
   column(
     null,
     [Attributes.spacing(10)],
     [
-      el(MyStyles.Title, [Attributes.padding(10)], "Hello!"),
+      el(styles.title, [Attributes.padding(10)], "Hello!"),
       row(
         null,
         [Attributes.spacing(10)],
         [
-          el(MyStyles.Content, [], "One"),
-          el(MyStyles.Content, [], "Two"),
-          el(MyStyles.Content, [], "Three")
+          el(styles.content, [], "One"),
+          el(styles.content, [], "Two"),
+          el(styles.content, [], "Three")
         ]
     ]
   )
@@ -69,13 +65,13 @@ const view = Element.layout(
 ```js
 // app.js
 import { layout, column, h1 } from "react-style-elements/elements";
-import styleSheet, { Styles } from "./styles";
+import styles from "./styles";
 import example from "./views/example";
 
 export default layout(
-  styleSheet,
-  column(Styles.App, [], [
-    h1(Styles.Title, [], "Welcome"),
+  styles(),
+  column(styles.app, [], [
+    h1(styles.title, [], "Welcome"),
     example("World")
   ])
 );
@@ -84,10 +80,10 @@ export default layout(
 ```js
 // views/example.js
 import { el, padding } from "react-style-elements/elements";
-import { Styles } from "../styles";
+import styles from "../styles";
 
 export default (label) => (
-  el(Styles.Example, [padding(10)], `Hello, ${label}!`)
+  el(styles.example, [padding(10)], `Hello, ${label}!`)
 );
 ```
 
@@ -97,22 +93,16 @@ import { styleSheet, style } from "react-style-elements/style";
 import { text, rgb } from "react-style-elements/style/color";
 import { size, typeface, font } from "react-style-elements/style/font";
 
-export const Styles = classes([
-  "App",
-  "Title",
-  "Example"
-]);
-
-export default styleSheet(Styles, [
-  style(Styles.App, [
+export default styleSheet([
+  style('app', [
     text(rgb(30, 30, 30)),
     size(16),
     typeface(font("Helvetica"), font("sans-serif"))
   ]),
-  style(Styles.Title, [
+  style('title', [
     size(28)
   ]),
-  style(Styles.Example, [
+  style('example', [
     text(rgb(30, 120, 30))
   ])
 ]);

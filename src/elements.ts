@@ -45,12 +45,10 @@ export function layout(
   styleSheet: StyleSheet,
   element: Element | Layout
 ): ReactElement<any> {
-  const styles = styleSheet.styles
+  const styles = styleSheet
     .map(
-      ([index, props]) =>
-        `.${styleSheet.classes[index]}{${props
-          .map(([key, value]) => `${key}:${value};`)
-          .join("")}}`
+      ({ name, props }) =>
+        `.${name}{${props.map(([key, value]) => `${key}:${value};`).join("")}}`
     )
     .join("");
 
