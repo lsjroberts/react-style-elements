@@ -3,6 +3,7 @@
 A partial port of the Elm library [style-elements][1] built upon React.
 
 - [Todo App][2]
+- [RealWorld App][3]
 
 ## Why?
 
@@ -149,3 +150,4 @@ export default connectedLayout(styleSheet, ({ state, dispatch }) =>
 
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
 [2]: https://github.com/lsjroberts/react-style-elements-todo
+[3]: https://github.com/lsjroberts/react-style-elements-realworld
