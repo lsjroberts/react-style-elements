@@ -3,6 +3,7 @@ import {
   fromPairs,
   groupBy,
   map,
+  flatten,
   mapValues,
   merge,
   omit,
@@ -11,14 +12,21 @@ import {
 
 // -- Element
 
-export interface Attribute {
+export type Attribute = RootAttribute | StyleAttribute | SpacingAttribute;
+export interface RootAttribute {
   key: string;
   value: string | number | Function;
-  parent: AttributeParent;
+  kind: "root";
 }
-export enum AttributeParent {
-  root = "root",
-  style = "style"
+export interface StyleAttribute {
+  key: string;
+  value: string;
+  kind: "style";
+}
+export interface SpacingAttribute {
+  key: "xy" | "x" | "y";
+  value: number;
+  kind: "spacing";
 }
 export type Element = ReactElement<any>;
 export type Layout = Row | Column;
@@ -40,8 +48,15 @@ export function single(
   );
 }
 
-export function transformAttrs(attrs: Array<Attribute>) {
-  const groupedAttrs = mapValues(groupBy(attrs, "parent"), group =>
+type TransformedAttributes = {
+  root?: object;
+  style?: object;
+  spacing?: { xy?: number; x?: number; y?: number };
+};
+export function transformAttrs(
+  attrs: Array<Array<Attribute> | Attribute>
+): TransformedAttributes {
+  const groupedAttrs = mapValues(groupBy(flatten(attrs), "kind"), group =>
     zipObject(map(group, "key"), map(group, "value"))
   );
   return merge(groupedAttrs.root, omit(groupedAttrs, "root"));

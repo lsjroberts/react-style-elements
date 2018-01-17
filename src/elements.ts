@@ -1,5 +1,5 @@
-import { ReactElement, createElement } from "react";
-import { merge, partial } from "lodash";
+import { Children, ReactElement, createElement } from "react";
+import { merge, omit, partial } from "lodash";
 
 import {
   Attribute,
@@ -16,6 +16,10 @@ import {
 // -- Basic
 
 export const el = partial(single, "div");
+export const navigation = partial(single, "nav");
+export const header = partial(single, "header");
+export const footer = partial(single, "footer");
+export const link = partial(single, "a");
 
 export function empty() {
   return createElement("span");
@@ -43,11 +47,11 @@ export function layout(
   const styles = styleSheet.styles
     .map(
       ([index, props]) =>
-        `.${styleSheet.classes[index]} { ${props
-          .map(([key, value]) => `${key}: ${value};`)
-          .join(" ")} }`
+        `.${styleSheet.classes[index]}{${props
+          .map(([key, value]) => `${key}:${value};`)
+          .join("")}}`
     )
-    .join(" ");
+    .join("");
 
   return createElement("div", { className: "style-elements" }, [
     createElement("style", {
@@ -62,17 +66,19 @@ export function row(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Row {
+  const transformedAttrs = transformAttrs(attrs);
+  const spacedChildren = spaceRowChildren(transformedAttrs.spacing, children);
   return createElement(
     "div",
-    merge(transformAttrs(attrs), {
+    merge(omit(transformAttrs(attrs), "spacing"), {
       style: {
         display: "flex",
         flexDirection: "row",
         flexWrap: "nowrap"
       },
-      className: ["el", style].filter(Boolean).join(" "),
-      children
-    })
+      className: ["el", style].filter(Boolean).join(" ")
+    }),
+    spacedChildren
   );
 }
 
@@ -81,18 +87,52 @@ export function wrappedRow(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Row {
+  const transformedAttrs = transformAttrs(attrs);
+  const spacedChildren = spaceRowChildren(transformedAttrs.spacing, children);
   return createElement(
     "div",
-    merge(transformAttrs(attrs), {
-      style: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap"
+    merge(
+      omit(transformAttrs(attrs), "spacing"),
+      {
+        style: {
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap"
+        },
+        className: ["el", style].filter(Boolean).join(" ")
       },
-      className: ["el", style].filter(Boolean).join(" "),
-      children
-    })
+      spacedChildren
+    )
   );
+}
+
+function spaceRowChildren(spacing, children) {
+  if (!spacing) {
+    return children;
+  }
+
+  return Children.map(children, (child, index) => {
+    let style = {
+      marginLeft: `${spacing.xy / 2}px`,
+      marginRight: `${spacing.xy / 2}px`
+    };
+
+    if (index === 0) {
+      style.marginLeft = null;
+    }
+
+    if (index === children.length - 1) {
+      style.marginRight = null;
+    }
+
+    return createElement(
+      "div",
+      {
+        style
+      },
+      child
+    );
+  });
 }
 
 export function column(
@@ -100,16 +140,50 @@ export function column(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Column {
+  const transformedAttrs = transformAttrs(attrs);
+  const spacedChildren = spaceColumnChildren(
+    transformedAttrs.spacing,
+    children
+  );
   return createElement(
     "div",
-    merge(transformAttrs(attrs), {
+    merge(omit(transformAttrs(attrs), "spacing"), {
       style: {
         display: "flex",
         flexDirection: "column",
         flexWrap: "nowrap"
       },
-      className: ["el", style].filter(Boolean).join(" "),
-      children
-    })
+      className: ["el", style].filter(Boolean).join(" ")
+    }),
+    spacedChildren
   );
+}
+
+function spaceColumnChildren(spacing, children) {
+  if (!spacing) {
+    return children;
+  }
+
+  return Children.map(children, (child, index) => {
+    let style = {
+      marginTop: `${spacing.xy / 2}px`,
+      marginBottom: `${spacing.xy / 2}px`
+    };
+
+    if (index === 0) {
+      style.marginTop = null;
+    }
+
+    if (index === children.length - 1) {
+      style.marginBottom = null;
+    }
+
+    return createElement(
+      "div",
+      {
+        style
+      },
+      child
+    );
+  });
 }
