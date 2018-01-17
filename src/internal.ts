@@ -1,16 +1,50 @@
 import { Component, ReactElement, createElement } from "react";
-import { fromPairs, merge } from "lodash";
+import {
+  fromPairs,
+  groupBy,
+  map,
+  mapValues,
+  merge,
+  omit,
+  zipObject
+} from "lodash";
 
 // -- Element
 
-export type Attribute = [string, string | number];
+export interface Attribute {
+  key: string;
+  value: string | number | Function;
+  parent: AttributeParent;
+}
+export enum AttributeParent {
+  root = "root",
+  style = "style"
+}
 export type Element = ReactElement<any>;
 export type Layout = Row | Column;
 export type Row = ReactElement<any>;
 export type Column = ReactElement<any>;
 
-export function styleAttrs(attrs: Array<Attribute>) {
-  return fromPairs(attrs);
+export function single(
+  type: string,
+  style: string,
+  attrs: Array<Attribute>,
+  child: Layout | Element | string
+): Element {
+  return createElement(
+    type,
+    merge(transformAttrs(attrs), {
+      className: ["el", style].filter(Boolean).join(" "),
+      children: child
+    })
+  );
+}
+
+export function transformAttrs(attrs: Array<Attribute>) {
+  const groupedAttrs = mapValues(groupBy(attrs, "parent"), group =>
+    zipObject(map(group, "key"), map(group, "value"))
+  );
+  return merge(groupedAttrs.root, omit(groupedAttrs, "root"));
 }
 
 // -- Style

@@ -1,5 +1,5 @@
 import { ReactElement, createElement } from "react";
-import { partial } from "lodash";
+import { merge, partial } from "lodash";
 
 import {
   Attribute,
@@ -8,26 +8,12 @@ import {
   Row,
   Column,
   StyleSheet,
-  styleAttrs,
-  normalized
+  normalized,
+  single,
+  transformAttrs
 } from "./internal";
 
 // -- Basic
-
-function single(
-  type: string,
-  style: string,
-  attrs: Array<Attribute>,
-  child: Layout | Element | string
-): Element {
-  return createElement(type, {
-    style: {
-      ...styleAttrs(attrs)
-    },
-    className: ["el", style].filter(Boolean).join(" "),
-    children: [child]
-  });
-}
 
 export const el = partial(single, "div");
 
@@ -76,16 +62,18 @@ export function row(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Row {
-  return createElement("div", {
-    style: {
-      ...styleAttrs(attrs),
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "nowrap"
-    },
-    className: ["el", style].filter(Boolean).join(" "),
-    children
-  });
+  return createElement(
+    "div",
+    merge(transformAttrs(attrs), {
+      style: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap"
+      },
+      className: ["el", style].filter(Boolean).join(" "),
+      children
+    })
+  );
 }
 
 export function wrappedRow(
@@ -93,16 +81,18 @@ export function wrappedRow(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Row {
-  return createElement("div", {
-    style: {
-      ...styleAttrs(attrs),
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap"
-    },
-    className: ["el", style].filter(Boolean).join(" "),
-    children
-  });
+  return createElement(
+    "div",
+    merge(transformAttrs(attrs), {
+      style: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap"
+      },
+      className: ["el", style].filter(Boolean).join(" "),
+      children
+    })
+  );
 }
 
 export function column(
@@ -110,14 +100,16 @@ export function column(
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Column {
-  return createElement("div", {
-    style: {
-      ...styleAttrs(attrs),
-      display: "flex",
-      flexDirection: "column",
-      flexWrap: "nowrap"
-    },
-    className: ["el", style].filter(Boolean).join(" "),
-    children
-  });
+  return createElement(
+    "div",
+    merge(transformAttrs(attrs), {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "nowrap"
+      },
+      className: ["el", style].filter(Boolean).join(" "),
+      children
+    })
+  );
 }
