@@ -20,6 +20,7 @@ export const navigation = partial(single, "nav");
 export const header = partial(single, "header");
 export const footer = partial(single, "footer");
 export const link = partial(single, "a");
+export const paragraph = partial(single, "p");
 
 export function empty() {
   return createElement("span");

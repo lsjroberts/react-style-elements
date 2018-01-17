@@ -13,3 +13,19 @@ export function typeface(fonts: Array<FontName>): StyleProp {
 export function font(name: string): FontName {
   return name;
 }
+
+export function center(): StyleProp {
+  return ["text-align", "center"];
+}
+
+export function alignLeft(): StyleProp {
+  return ["text-align", "left"];
+}
+
+export function alignRight(): StyleProp {
+  return ["text-align", "right"];
+}
+
+export function weight(weight: number): StyleProp {
+  return ["font-weight", `${weight}`];
+}
