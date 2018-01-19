@@ -1,4 +1,4 @@
-import { StyleProp } from "../internal";
+import { ResolvedStyleProp } from "../internal";
 
 interface ColorProp {
   r: number;
@@ -9,11 +9,11 @@ interface ColorProp {
 
 // -- Style Props
 
-export function background(color: ColorProp): StyleProp {
+export function background(color: ColorProp): ResolvedStyleProp {
   return ["background-color", rgbaText(color)];
 }
 
-export function text(color: ColorProp): StyleProp {
+export function text(color: ColorProp): ResolvedStyleProp {
   return ["color", rgbaText(color)];
 }
 
@@ -29,3 +29,6 @@ function rgbaText(color: ColorProp): string {
   }
   return `rgb(${color.r}, ${color.g}, ${color.b})`;
 }
+
+export const white = rgb(255, 255, 255);
+export const black = rgb(0, 0, 0);

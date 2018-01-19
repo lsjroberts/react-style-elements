@@ -8,7 +8,23 @@ export function styleSheet(
 ): () => StyleSheet {
   const styleClasses = classes(styles, hash);
 
-  const styleSheet = () => styles;
+  const styleSheet = (...args) =>
+    styles.map(({ name, props }) => ({
+      name,
+      props: props
+        .map(prop => {
+          if (Array.isArray(prop)) {
+            return prop;
+          }
+          return prop(...args);
+        })
+        .reduce((props, prop) => {
+          if (Array.isArray(prop[0])) {
+            return [...props, ...prop];
+          }
+          return [...props, prop];
+        }, [])
+    }));
 
   forOwn(styleClasses, (value, key) => {
     styleSheet[key] = value;
@@ -17,7 +33,7 @@ export function styleSheet(
   return styleSheet;
 }
 
-export function style(name, props: Array<StyleProp>): Style {
+export function style(name: string, props: Array<StyleProp>): Style {
   return { name, props };
 }
 

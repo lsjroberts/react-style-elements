@@ -124,9 +124,9 @@ ReactDOM.render(
 Then use `connectedLayout()`:
 
 ```js
-import { connectedLayout } from "react-style-elements/redux";
+import { connectLayout } from "react-style-elements/redux";
 
-export default connectedLayout(styleSheet, ({ state, dispatch }) =>
+export default connectLayout(styleSheet, ({ state, dispatch }) =>
   Input.text(
     null,
     {
@@ -135,6 +135,78 @@ export default connectedLayout(styleSheet, ({ state, dispatch }) =>
     }
   )
 );
+```
+
+### Themes
+
+Each property in the array passed into the second argument of `style()` can be a callback. The arguments passed in are those given to the `styles()` in `layout()`, and it should return an array of properties.
+
+```js
+const styles = styleSheet([
+  style('app', [
+    size(16),
+    weight(700),
+    (arg) => {
+      // arg === 'some value'
+      // return [...];
+    },
+  ]),
+]);
+
+layout(styles('some value'));
+```
+
+This can be used to create a themed stylesheet that can be changed at runtime.
+
+```js
+const styles = styleSheet([
+  style('app', [
+    size(16),
+    weight(700),
+    (theme = 'light') =>
+      theme === 'light'
+        ? [
+            background(rgb(240, 240, 240)),
+            text(rgb(30, 30, 30)),
+          ],
+        : [
+            background(rgb(30, 30, 30)),
+            text(rgb(240, 240, 240)),
+          ]
+  ])
+  ),
+]);
+
+const view = connect(({ theme }) =>
+  layout(
+    styles(theme),
+    null,
+    el(styles.app, [], 'Hello!')
+  )
+);
+```
+
+This could be cleaner with a custom `themed()` function.
+
+```js
+const themed = (theme = 'light') => (themedStyles) => themedStyles[theme] || [];
+
+const styles = styleSheet([
+  style('app', [
+    size(16),
+    weight(700),
+    themed({
+      light: [
+        background(rgb(240, 240, 240)),
+        text(rgb(30, 30, 30)),
+      ],
+      dark: [
+        background(rgb(30, 30, 30)),
+        text(rgb(240, 240, 240)),
+      ],
+    })
+  ]),
+]);
 ```
 
 
