@@ -102,7 +102,7 @@ export function button(
   return createElement(
     "button",
     merge(transformAttrs(attrs), {
-      onPress: evt =>
+      onClick: evt =>
         (<Button>button).onPress ? (<Button>button).onPress() : noop,
       type: (<Button>button).submit ? "submit" : null
     }),
