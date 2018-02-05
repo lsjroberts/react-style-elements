@@ -1,5 +1,5 @@
-import { StyleProp } from "../internal";
+import { ResolvedStyleProp } from "../internal";
 
-export function rounded(radius: number): StyleProp {
+export function rounded(radius: number): ResolvedStyleProp {
   return ["border-radius", `${radius}px`];
 }

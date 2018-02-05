@@ -10,6 +10,7 @@ import {
   StyleSheet,
   normalized,
   single,
+  multi,
   transformAttrs
 } from "./internal";
 
@@ -20,7 +21,6 @@ export const navigation = partial(single, "nav");
 export const header = partial(single, "header");
 export const footer = partial(single, "footer");
 export const link = partial(single, "a");
-export const paragraph = partial(single, "p");
 
 export function empty() {
   return createElement("span");
@@ -38,6 +38,14 @@ export const h3 = partial(single, "h3");
 export const h4 = partial(single, "h4");
 export const h5 = partial(single, "h5");
 export const h6 = partial(single, "h6");
+
+export function paragraph(
+  style: string,
+  attrs: Array<Attribute>,
+  children: Array<string>
+) {
+  return multi("p", style, attrs, children);
+}
 
 // -- Layout
 

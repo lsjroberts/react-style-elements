@@ -42,9 +42,24 @@ export function single(
   return createElement(
     type,
     merge(transformAttrs(attrs), {
-      className: ["el", style].filter(Boolean).join(" "),
-      children: child
-    })
+      className: ["el", style].filter(Boolean).join(" ")
+    }),
+    child
+  );
+}
+
+export function multi(
+  type: string,
+  style: string,
+  attrs: Array<Attribute>,
+  children: Array<Layout | Element | string>
+): Element {
+  return createElement(
+    type,
+    merge(transformAttrs(attrs), {
+      className: ["el", style].filter(Boolean).join(" ")
+    }),
+    children
   );
 }
 

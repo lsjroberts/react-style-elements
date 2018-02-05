@@ -27,6 +27,14 @@ export function center(): Array<StyleAttribute> {
   ];
 }
 
+export function alignRight(): StyleAttribute {
+  return {
+    key: "margin-left",
+    value: "auto",
+    kind: "style"
+  };
+}
+
 export function maxWidth(w: number): StyleAttribute {
   return px("max-width", w);
 }
